@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test'
 var fs = require('fs')
 var rimraf = require('rimraf')
 
-var utils = require('../lib/storage/utils')
+var projects = require('../lib/storage/projects')
 
 global.assert = require('chai').assert
 
@@ -57,9 +57,15 @@ global.assert.fileHasContent = function(path, expected) {
 }
 
 global.cleanup = function (done) {
-  rimraf(utils.dataPath, function(err) {
-    if (err) console.log('error removing data directory', err)
+  projects.getProjectRoot(function(projectRoot) {
+    rimraf(projectRoot + '/' + projects.dataDirName, function(err) {
+      if (err) console.log('error removing data directory', err)
 
-    done()
+      fs.unlink(projectRoot + '/' + projects.configName, function(err) {
+        if (err) console.log('error removing config file', err)
+
+        done()
+      })
+    })
   })
 }

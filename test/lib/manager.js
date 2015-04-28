@@ -8,36 +8,36 @@ var utils = require('../../lib/storage/utils')
 describe('manager', function() {
   afterEach(cleanup)
 
-  describe('add', function() {
-    it('creates a data directory, if not present', function(done) {
-      var inspect = stdout.inspect()
+  // describe('add', function() {
+  //   it('creates a data directory, if not present', function(done) {
+  //     var inspect = stdout.inspect()
 
-      manager.add('http://www.test.com/api/path', function(err) {
-        inspect.restore()
+  //     manager.add('http://www.test.com/api/path', function(err) {
+  //       inspect.restore()
 
-        assert.fileExists(utils.dataPath)
-        assert.deepEqual(inspect.output, ['endpoint added\n'])
-        done()
-      })
-    })
+  //       assert.fileExists(utils.dataPath)
+  //       assert.deepEqual(inspect.output, ['endpoint added\n'])
+  //       done()
+  //     })
+  //   })
 
-    it('adds an endpoint directory', function(done) {
-      var inspect = stdout.inspect()
+  //   it('adds an endpoint directory', function(done) {
+  //     var inspect = stdout.inspect()
 
-      manager.add('http://www.test.com/api/path', function(err) {
-        manager.add('http://www.test.com/api/path/2', function(err) {
-          inspect.restore()
+  //     manager.add('http://www.test.com/api/path', function(err) {
+  //       manager.add('http://www.test.com/api/path/2', function(err) {
+  //         inspect.restore()
 
-          assert.fileExists(utils.dataPath + 'www.test.com:api:path')
-          assert.fileExists(utils.dataPath + 'www.test.com:api:path:2')
-          done()
-        })
-      })
-    })
-  })
+  //         assert.fileExists(utils.dataPath + 'www.test.com:api:path')
+  //         assert.fileExists(utils.dataPath + 'www.test.com:api:path:2')
+  //         done()
+  //       })
+  //     })
+  //   })
+  // })
 
   describe('fetch', function() {
-    it('outputs a warning if no data directory exist', function(done) {
+    it('outputs a warning if not initialized', function(done) {
       var inspect = stdout.inspect()
 
       manager.fetch(function() {
